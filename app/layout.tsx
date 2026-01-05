@@ -17,7 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {/* VWO SmartCode - Must be in body for Next.js App Router */}
-        <VWOScript accountId={1180999} />
+        <VWOScript accountId="1180999" />
         {children}
       </body>
     </html>
