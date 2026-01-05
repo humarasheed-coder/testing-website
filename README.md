@@ -62,7 +62,8 @@ That's it! Your site will be live in minutes.
 ### Step 2: Add VWO SmartCode to Your Website
 
 1. **In VWO Dashboard:**
-   - Go to **Settings** → **Account Settings** → **SmartCode**
+   - **If website not registered:** Click **"Connect Your Website"** and register your Vercel URL
+   - **If website registered:** Go to **Configurations** → **Websites and Apps** → Click your website → **Code** tab
    - Copy your VWO SmartCode (it looks like a script tag)
 
 2. **Add to Your Next.js App:**

@@ -63,7 +63,8 @@ vercel
 
 1. **Get Your VWO SmartCode:**
    - Go to [vwo.com](https://vwo.com) and sign up/login
-   - Navigate to: **Settings** → **Account Settings** → **SmartCode**
+   - **If website not registered:** Look for **"Connect Your Website"** button and register your Vercel URL
+   - **If website registered:** Go to **Configurations** → **Websites and Apps** → Click your website → **Code** tab
    - Copy the entire SmartCode script
 
 2. **Add to Your Website:**

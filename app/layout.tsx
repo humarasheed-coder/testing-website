@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
 import './globals.css'
+import { VWOScript } from 'vwo-smartcode-nextjs'
 
 export const metadata: Metadata = {
   title: 'Testing Website - VWO Testing',
@@ -15,16 +16,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {/* VWO SmartCode - Replace with your actual VWO SmartCode from vwo.com */}
-        {/* 
-        <Script id="vwo-smartcode" strategy="afterInteractive">
-          {`
-            window._vwo_code = (function(){
-              // Paste your VWO SmartCode here
-            })();
-          `}
-        </Script>
-        */}
+        {/* VWO SmartCode - Must be in body for Next.js App Router */}
+        <VWOScript accountId={1180999} />
         {children}
       </body>
     </html>
