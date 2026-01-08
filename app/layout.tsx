@@ -38,6 +38,81 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
             `,
           }}
         />
+
+        {/* AB Testing Config - Set up configuration before interactive */}
+        <Script
+          id="ab-config"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var testId = params.get('testId');
+
+  window.AB_CONFIG = {
+    base: 'http://localhost:3000',
+    analyticsPath: '/api/events',
+    blockUntilVariants: false,
+    apiKey: '$2b$12$BNtcK2bjEtuTB3u4jYoDjO3nGuQ2oIKxVLbSfLzIeaWzYtlrn8/Za',
+  };
+
+  if (testId) {
+    window.AB_CONFIG.testId = testId;
+    console.info('[AB SDK] Using testId from URL:', testId);
+  } else {
+    console.warn('[AB SDK] Missing ?testId=<uuid> in URL.');
+  }
+})();
+            `,
+          }}
+        />
+
+        {/* AB Testing SDK - Load after hydration */}
+        <Script
+          id="ab-sdk"
+          src="http://localhost:3000/api/sdk.js"
+          strategy="lazyOnload"
+        />
+
+        {/* AB Testing Reveal Hook - Handle SDK ready events */}
+        <Script
+          id="ab-reveal-hook"
+          strategy="lazyOnload"
+          dangerouslySetInnerHTML={{
+            __html: `
+(function () {
+  function reveal() {
+    // No visual block anymore; this hook just logs readiness.
+  }
+
+  window.addEventListener('ab:ready', function () {
+    reveal();
+    console.info('[AB SDK] ab:ready.');
+  }, { once: true });
+
+  window.addEventListener('load', function () {
+    var tag = document.getElementById('ab-sdk');
+    if (!tag) { reveal(); return; }
+
+    if (tag.readyState && (tag.readyState === 'loaded' || tag.readyState === 'complete')) {
+      reveal();
+      console.info('[AB SDK] SDK already loaded.');
+    } else {
+      tag.addEventListener('load', function () {
+        reveal();
+        console.info('[AB SDK] SDK loaded.');
+      }, { once: true });
+
+      tag.addEventListener('error', function () {
+        reveal();
+        console.error('[AB SDK] Failed to load SDK.');
+      }, { once: true });
+    }
+  }, { once: true });
+})();
+            `,
+          }}
+        />
       </head>
       <body>
         {children}
